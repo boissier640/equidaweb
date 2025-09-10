@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 /**
  *
  * @author sio2
@@ -13,6 +14,8 @@ public class Lieu {
    private String libelle;
    private int nbBoxes;
    private String commentaire;
+   
+   private ArrayList<Vente> lesVentes ;
 
 
     public Lieu() {
@@ -30,7 +33,7 @@ public class Lieu {
         return libelle;
     }
 
-    public void setLibelle(String nom) {
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
     
@@ -46,7 +49,20 @@ public class Lieu {
         return commentaire;
     }
 
-    public void setCommentaire(String nom) {
+    public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
+    }
+    public ArrayList<Vente> getLesVentes() {
+        return lesVentes;
+    }
+    public void setLesVentes(ArrayList<Vente> lesVentes) {
+        this.lesVentes = lesVentes;
+    }
+
+    public void addVente(Vente uneVente){
+        if (lesVentes ==null ){
+            lesVentes = new ArrayList<Vente>();
+        }
+        lesVentes.add(uneVente);
     }
 }

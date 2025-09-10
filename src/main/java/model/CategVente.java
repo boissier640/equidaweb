@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sio2
@@ -11,7 +13,8 @@ package model;
 public class CategVente {
    private int id;
    private String libelle;
-
+   
+   private ArrayList<Vente> lesVentes ;
 
     public CategVente() {
     }
@@ -28,7 +31,20 @@ public class CategVente {
         return libelle;
     }
 
-    public void seLibelle(String nom) {
+    public void seLibelle(String libelle) {
         this.libelle = libelle;
+    }
+    public ArrayList<Vente> getLesVentes() {
+        return lesVentes;
+    }
+    public void setLesVentes(ArrayList<Vente> lesVentes) {
+        this.lesVentes = lesVentes;
+    }
+
+    public void addVente(Vente uneVente){
+        if (lesVentes ==null ){
+            lesVentes = new ArrayList<Vente>();
+        }
+        lesVentes.add(uneVente);
     }
 }

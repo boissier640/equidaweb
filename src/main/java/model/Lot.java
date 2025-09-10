@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sio2
@@ -14,6 +16,7 @@ public class Lot {
     
     private Vente vente;
     private Cheval cheval;
+    private ArrayList<Enchere> lesEncheres ;
 
     public Lot() {
     }
@@ -48,6 +51,19 @@ public class Lot {
     
     public void setVente(Vente vente) {
         this.vente = vente;
+    }
+    public ArrayList<Enchere> getLesEncheres() {
+        return lesEncheres;
+    }
+    public void setLesEncheres(ArrayList<Enchere> lesEncheres) {
+        this.lesEncheres = lesEncheres;
+    }
+
+    public void addEnchere(Enchere uneEnchere){
+        if (lesEncheres ==null ){
+            lesEncheres = new ArrayList<Enchere>();
+        }
+        lesEncheres.add(uneEnchere);
     }
 
 }

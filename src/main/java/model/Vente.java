@@ -5,6 +5,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Vente {
     
     private Lieu lieu;
     private CategVente categVente;
+    private ArrayList<Lot> lesLots ;
 
     public Vente() {
     }
@@ -89,5 +91,19 @@ public class Vente {
     public void setDateDebutVente(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public ArrayList<Lot> getLesLots() {
+        return lesLots;
+    }
+    public void setLesLots(ArrayList<Lot> lesLots) {
+        this.lesLots = lesLots;
+    }
+
+    public void addLot(Lot unLot){
+        if (lesLots ==null ){
+            lesLots = new ArrayList<Lot>();
+        }
+        lesLots.add(unLot);
+    }
 }
+
 
