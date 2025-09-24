@@ -31,7 +31,7 @@ public class CategVente {
         return libelle;
     }
 
-    public void seLibelle(String libelle) {
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
     public ArrayList<Vente> getLesVentes() {

@@ -35,8 +35,8 @@ public class TestLieu {
         System.out.println("Liste des ventes se tenant dans ce lieu : ");
 
 		// Affichage des informations sur chevaux liées à la race
-        for (Vente c : l.getLesVentes()){
-            System.out.println("Ventes numéro : " + c.getId() + " " + c.getNom());
+        for (Vente v : l.getLesVentes()){
+            System.out.println("Ventes numéro : " + v.getId() + " " + v.getNom());
         }
     }  
 }

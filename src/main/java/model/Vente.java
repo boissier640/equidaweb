@@ -84,7 +84,7 @@ public class Vente {
     public CategVente getCategVente() {
         return categVente;
     }
-    public void setCategVentegetL(CategVente categVente) {
+    public void setCategVente(CategVente categVente) {
         this.categVente = categVente;
     }
 
