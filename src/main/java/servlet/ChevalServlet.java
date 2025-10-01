@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.*;
 import model.Cheval;
 import model.Race;
 import java.time.LocalDate;
+import model.CourseCheval;
 
 @WebServlet(name = "chevalServlet", value = "/cheval-servlet/*")
 public class ChevalServlet extends HttpServlet {
@@ -46,6 +47,8 @@ public class ChevalServlet extends HttpServlet {
             try {
                 int idCheval = Integer.parseInt(request.getParameter("idCheval"));
                 Cheval leCheval = DaoCheval.getLeCheval(cnx, idCheval);
+                ArrayList<CourseCheval> lesCoursesChevaux = DaoCheval.getLesCoursesChevauxById(cnx, idCheval);
+                request.setAttribute("pLesCoursesChevaux", lesCoursesChevaux);
 
                 if (leCheval != null) {
                     request.setAttribute("pLeCheval", leCheval);

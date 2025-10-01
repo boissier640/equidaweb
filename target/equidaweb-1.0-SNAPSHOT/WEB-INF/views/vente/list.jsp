@@ -61,8 +61,8 @@
                     <tbody>
                         <% for (Vente v : lesVentes) { %>
                             <tr>
-                                <td><a href="<%= request.getContextPath() %>/vente-servlet/show?idVente=<%= v.getId() %>"><%= v.getId() %></td>
-                                <td><%= v.getNom() %></a></td>
+                                <td><%= v.getId() %></a></td>
+                                <td><a href="<%= request.getContextPath() %>/vente-servlet/show?idVente=<%= v.getId() %>"><%= v.getNom() %></td>
                                 <td><%= v.getDateDebutVente() %></a></td>
                                 <td><%= v.getDateFinVente() %></a></td>
                                 <td><%= v.getCorpsMessage() %></a></td>

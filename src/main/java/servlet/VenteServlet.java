@@ -59,7 +59,8 @@ public class VenteServlet extends HttpServlet {
             try {
                 int idVente = Integer.parseInt(request.getParameter("idVente"));
                 Vente laVente = DaoVente.getLaVente(cnx, idVente);
-
+                ArrayList<Lot> lesLots = DaoVente.getLesLotsById(cnx, idVente);
+                request.setAttribute("pLesLots", lesLots);
                 if (laVente != null) {
                     request.setAttribute("pLaVente", laVente);
                     this.getServletContext().getRequestDispatcher("/WEB-INF/views/vente/show.jsp").forward(request, response);

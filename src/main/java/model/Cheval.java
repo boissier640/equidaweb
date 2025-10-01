@@ -10,6 +10,9 @@ public class Cheval {
     private LocalDate dateNaissance;
     
     private ArrayList<Lot> lesLots ;
+    private ArrayList<CourseCheval> lesCoursesChevaux ;
+    private Cheval chevalPere;
+    private Cheval chevalMere;
     private Race race;
 
     public Cheval() {
@@ -50,11 +53,41 @@ public class Cheval {
     public void setLesLots(ArrayList<Lot> lesLots) {
         this.lesLots = lesLots;
     }
-
+    
     public void addLot(Lot unLot){
         if (lesLots ==null ){
             lesLots = new ArrayList<Lot>();
         }
         lesLots.add(unLot);
+    }
+
+    public Cheval getChevalPere() {
+        return chevalPere;
+    }
+
+    public Cheval getChevalMere() {
+        return chevalMere;
+    }   
+
+    public void setChevalPere(Cheval chevalPere) {
+        this.chevalPere = chevalPere;
+    }
+
+    public void setChevalMere(Cheval chevalMere) {
+        this.chevalMere = chevalMere;
+    }
+    
+    public ArrayList<CourseCheval> getLesCoursesChevaux() {
+        return lesCoursesChevaux;
+    }
+    public void setLesCoursesChevaux(ArrayList<CourseCheval> lesCoursesChevaux) {
+        this.lesCoursesChevaux = lesCoursesChevaux;
+    }
+    
+    public void addCourseCheval(CourseCheval uneCourseCheval){
+        if (lesCoursesChevaux ==null ){
+            lesCoursesChevaux = new ArrayList<CourseCheval>();
+        }
+        lesCoursesChevaux.add(uneCourseCheval);
     }
 }

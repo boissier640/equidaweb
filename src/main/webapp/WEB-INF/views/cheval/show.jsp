@@ -1,3 +1,6 @@
+<%@page import="model.CourseCheval"%>
+<%@page import="model.Course"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.Cheval" %>
 
@@ -79,6 +82,34 @@
                                 <div class="col-sm-9 detail-value">
                                     <%= leCheval.getRace() != null ? leCheval.getRace().getNom() : "Non renseignée" %>
                                 </div>
+                            </div>
+                                
+                            <h3>Essemble des courses réaliser par le cheval :</h3>
+                                <div class="table-responsive">
+                                <% ArrayList<CourseCheval> lesCoursesChevaux = (ArrayList)request.getAttribute("pLesCoursesChevaux"); %>
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Course</th>
+                                                <th>Lieu de la course</th>
+                                                <th>Date de la course</th>
+                                                <th>Position</th>
+                                                <th>Temp</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+                                        <% for (CourseCheval cc: lesCoursesChevaux) { %>
+                                            <tr>
+
+                                                <td><%= cc.getCourse().getNom()%></a></td>
+                                                <td><%= cc.getCourse().getLieu()%></a></td>
+                                                <td><%= cc.getCourse().getDate()%></a></td>
+                                                <td><%= cc.getPosition()%></a></td>
+                                                <td><%= cc.getTemp()%></a></td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div class="row" style="margin-top: 30px;">

@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.Vente" %>
 <%@ page import="model.Lot" %>
@@ -96,7 +97,31 @@
                                     <%= laVente.getLieu() != null ? laVente.getLieu().getLibelle() : "Non renseignée" %>
                                 </div>
                             </div>
+                            
+                                <h3>Essemble des lots concerner par cette vente :</h3>
+                                <div class="table-responsive">
+                                <% ArrayList<Lot> lesLots = (ArrayList)request.getAttribute("pLesLots"); %>
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Nom du cheval</th>
+                                                <th>Prix de départ</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+                                        <% for (Lot lt: lesLots) { %>
+                                            <tr>
 
+                                                <td><%= lt.getId() %></a></td>
+                                                <td><a href="<%= request.getContextPath() %>/cheval-servlet/show?idCheval=<%= lt.getCheval().getId() %>"><%= lt.getCheval().getNom() %></a></td>
+                                                <td><%= lt.getPrixDepart() %></a></td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                                    
                             <div class="row" style="margin-top: 30px;">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <a href="<%= request.getContextPath() %>/vente-servlet/list" class="btn btn-default">
@@ -104,33 +129,6 @@
                                     </a>
                                     <!-- Vous pouvez ajouter d'autres boutons ici, comme Modifier ou Supprimer -->
                                 </div>
-                            
-                                <h3>Essemble des lots concerner par cette vente :</h3>
-                                <div class="table-responsive">
-                                <% ArrayList<Lot> lesLots = (ArrayList)request.getAttribute("pLesLot"); %>
-                                    <table class="table table-striped table-sm">
-                                        <thead>
-                                            <tr>
-                                                <th>id</th>
-                                                <th>nom</th>
-                                                <th>date de début de vente</th>
-                                                <th>date de fin de vente</th>
-                                                <th>message</th>
-                                            </tr>
-                                        </thead>
-                                    <tbody>
-                                        <% for (Vente v : lesLots) { %>
-                                            <tr>
-                                                <td><a href="<%= request.getContextPath() %>/vente-servlet/show?idVente=<%= v.getId() %>"><%= v.getId() %></td>
-                                                <td><%= v.getNom() %></a></td>
-                                                <td><%= v.getDateDebutVente() %></a></td>
-                                                <td><%= v.getDateFinVente() %></a></td>
-                                                <td><%= v.getCorpsMessage() %></a></td>
-                                            </tr>
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                            </div>          
                             
                         <% } else { %>
                             <div class="alert alert-danger">

@@ -2,11 +2,14 @@ package database;
 
 import model.Cheval;
 import model.Race;
+import model.CourseCheval;
+import model.Course;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DaoCheval {
@@ -56,12 +59,7 @@ public class DaoCheval {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT c.id as c_id, c.nom as c_nom, " +
-                "r.id as r_id, r.nom as r_nom " +
-                "FROM cheval c " +
-                "INNER JOIN race r ON c.race_id = r.id " +
-                "WHERE c.id = ?"
-            );
+                "SELECT c.id as c_id, c.nom as c_nom, r.id as r_id, r.nom as r_nom, cpere.nom as cpere_nom, cmere.nom as cmere_nom FROM cheval c INNER JOIN race r ON c.race_id = r.id INNER JOIN cheval cpere ON c.pere = cpere.id INNER JOIN cheval cmere ON c.mere = cmere.id WHERE c.id = ?");
             requeteSql.setInt(1, idCheval);
             resultatRequete = requeteSql.executeQuery();
             if (resultatRequete.next()) {
@@ -72,6 +70,14 @@ public class DaoCheval {
                 race.setId(resultatRequete.getInt("r_id"));
                 race.setNom(resultatRequete.getString("r_nom"));
                 cheval.setRace(race);
+                Cheval cp = new Cheval();
+                cp.setId(resultatRequete.getInt("cpere_id"));
+                cp.setNom(resultatRequete.getString("cpere_nom"));
+                cheval.setChevalPere(cp);
+                Cheval cm = new Cheval();
+                cm.setId(resultatRequete.getInt("cmere_id"));
+                cm.setNom(resultatRequete.getString("cmere_nom"));
+                cheval.setChevalMere(cm);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,4 +126,27 @@ public class DaoCheval {
         return false;
     }
 }
+    public static ArrayList<CourseCheval> getLesCoursesChevauxById(Connection cnx, int id) {
+        ArrayList<CourseCheval> lesCousesChevaux = new ArrayList<CourseCheval>();
+        try {
+            requeteSql = cnx.prepareStatement("SELECT cc.position as cc_position, cc.temps as cc_temps, c.nom as c_nom, c.lieu as c_lieu, c.date as c_date FROM courseCheval cc INNER JOIN course c ON cc.course = c.id INNER JOIN cheval ch ON cc.cheval = ch.id WHERE ch.id = ?");
+            requeteSql.setInt(1, id);
+            resultatRequete = requeteSql.executeQuery();
+            while (resultatRequete.next()) {
+                CourseCheval cc = new CourseCheval();
+                cc.setPosition(resultatRequete.getString("cc_position"));
+                cc.setTemp(resultatRequete.getTime("cc_temps"));
+                Course c = new Course();
+                c.setNom(resultatRequete.getString("c_nom"));
+                c.setLieu(resultatRequete.getString("c_lieu"));
+                c.setDate(resultatRequete.getDate("c_date"));
+                cc.setCourse(c);
+                lesCousesChevaux.add(cc);
+                 }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("La requête de getLesLots a généré une exception SQL");
+        }
+        return lesCousesChevaux;
+    }
 }

@@ -20,6 +20,7 @@ public class TestDaoVente {
         Connection cnx = Connexionbdd.ouvrirConnexion();
         System.out.println ("nombre de vente = " + DaoVente.getLesVentes(cnx).size());
         System.out.println ("La vente" + DaoVente.getLaVente(cnx, 1).getId() + " est " + DaoVente.getLaVente(cnx, 1).getNom() + " de categorie " + DaoVente.getLaVente(cnx, 1).getCategVente().getLibelle() + " aura lieu à " + DaoVente.getLaVente(cnx, 1).getLieu().getLibelle());
+        System.out.println ("Le nombre de lot afilié à la vente est de " + DaoVente.getLesLotsById(cnx, 1).size());
     }
 }
 
