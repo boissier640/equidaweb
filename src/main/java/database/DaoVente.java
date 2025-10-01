@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import model.CategVente;
 import model.Vente;
 import model.Lieu;
+import model.Lot;
+import model.Cheval;
 
 
 /**
@@ -32,7 +34,7 @@ public class DaoVente {
         ArrayList<Vente> lesVentes = new ArrayList<Vente>();
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT v.id as v_id, v.nom as v_nom, v.dateDebut as v_dateDebut, v.dateFin as v_dateFin, v.objectifMessage as v_objectifMessage, v.corpsMessage as v_corpsMessage, l.libelle as l_libelle, cv.libelle as cv_libelle FROM vente v INNER JOIN lieu l ON v.lieu = l.id INNER JOIN categorieVente cv ON v.categorie = cv.id ORDER BY nom"
+                "SELECT v.id as v_id, v.nom as v_nom, v.dateDebut as v_dateDebut, v.dateFin as v_dateFin, v.objectifMessage as v_objectifMessage, v.corpsMessage as v_corpsMessage, l.libelle as l_libelle, cv.libelle as cv_libelle FROM vente v INNER JOIN lieu l ON v.lieu = l.id INNER JOIN categorieVente cv ON v.categorie = cv.id ORDER BY v.id"
             );
             resultatRequete = requeteSql.executeQuery();
             while (resultatRequete.next()) {
@@ -66,10 +68,11 @@ public class DaoVente {
      * @return Race La race trouvée ou null si non trouvée
      */
     public static Vente getLaVente(Connection cnx, int id) {
+        ArrayList<Lot> lesLots = new ArrayList<Lot>();
         Vente v = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT v.id as v_id, v.nom as v_nom, v.dateDebut as v_dateDebut, v.dateFin as v_dateFin, v.objectifMessage as v_objectifMessage, v.corpsMessage as v_corpsMessage, l.libelle as l_libelle, cv.libelle as cv_libelle FROM vente v INNER JOIN lieu l ON v.lieu = l.id INNER JOIN categorieVente cv ON v.categorie = cv.id WHERE v.id = ?");
+                "SELECT v.id as v_id, v.nom as v_nom, v.dateDebut as v_dateDebut, v.dateFin as v_dateFin, v.objectifMessage as v_objectifMessage, v.corpsMessage as v_corpsMessage, l.libelle as l_libelle, cv.libelle as cv_libelle, lt.id as lt_id, lt.prixDepart as lt_prixDepart, c.nom as c_nom FROM vente v INNER JOIN lieu l ON v.lieu = l.id INNER JOIN lot lt ON lt.numVente = v.id INNER JOIN categorieVente cv ON v.categorie = cv.id INNER JOIN cheval c ON lt.numCheval = c.id WHERE v.id = ?");
             requeteSql.setInt(1, id);
             resultatRequete = requeteSql.executeQuery();
             if (resultatRequete.next()) {
@@ -86,7 +89,27 @@ public class DaoVente {
                 CategVente c = new CategVente();
                 c.setLibelle(resultatRequete.getString("cv_libelle"));
                 v.setCategVente(c);
-            }
+                 }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("La requête de getLaVente a généré une exception SQL");
+        }
+        return v;
+    }
+                
+    public static Vente getLesLots(Connection cnx, int id) {
+        ArrayList<Lot> lesLots = new ArrayList<Lot>();
+        Vente v = null;
+        try {
+            requeteSql = cnx.prepareStatement(
+                "SELECT v.id as v_id, v.nom as v_nom, v.dateDebut as v_dateDebut, v.dateFin as v_dateFin, v.objectifMessage as v_objectifMessage, v.corpsMessage as v_corpsMessage, l.libelle as l_libelle, cv.libelle as cv_libelle, lt.id as lt_id, lt.prixDepart as lt_prixDepart, c.nom as c_nom FROM vente v INNER JOIN lieu l ON v.lieu = l.id INNER JOIN lot lt ON lt.numVente = v.id INNER JOIN categorieVente cv ON v.categorie = cv.id INNER JOIN cheval c ON lt.numCheval = c.id WHERE v.id = ?");
+            requeteSql.setInt(1, id);
+            resultatRequete = requeteSql.executeQuery();
+            if (resultatRequete.next()) {
+                Lot lt = new Lot();
+                
+                
+                 }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("La requête de getLaVente a généré une exception SQL");
